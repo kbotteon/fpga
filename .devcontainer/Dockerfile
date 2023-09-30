@@ -23,13 +23,11 @@ RUN apt-get update \
         git \
         git-lfs \
         screen \
-        python3 \
-        python3-pip \
+        # Python 3.10 built from source since 3.9 is latest in apt
         build-essential \
         cmake \
         clang \
         gdb \
-        python3-dev \
         # Stuff that Codespaces may or may not rely on
         swig3.0 \
         software-properties-common \
@@ -60,13 +58,13 @@ RUN apt-get update \
 # TODO: Copy in a default xstartup for VNC
 
 # Set up open source FPGA tools like GHDL and Verilator
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     # Manually handle Verilator dependencies in case building from source
     git help2man perl python3 make autoconf g++ flex bison ccache \
     libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlibc \
     zlib1g zlib1g-dev \
     # Install these from the package manager
-    ghdl gktwave
+    ghdl gtkwave
 
 # But build the latest and greatest Verilator from source
 RUN \
