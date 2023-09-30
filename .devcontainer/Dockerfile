@@ -38,6 +38,7 @@ RUN apt-get update \
         tigervnc-standalone-server \
         xfce4 \
         xfce4-terminal \
+        dbus-x11 \
         # Vivado and Vitis dependencies
         libgl1-mesa-glx \
         libgl1-mesa-dri \
