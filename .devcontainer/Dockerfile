@@ -3,11 +3,12 @@
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
 
-FROM ubuntu:focal
+# Xilinx tools rely on Ubuntu 20.04
+FROM ubuntu:20.04
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     # Restore man command
-    && yes | unminimize 2>&1 
+    && yes | unminimize 2>&1
 
 ENV LANG="C.UTF-8"
 
@@ -35,8 +36,10 @@ RUN apt-get update \
         # By default pip is not available in the buildpacks image
         python-pip-whl \
         # This sets up a graphical environment and VNC for Xilinx GUI tools
+        tigervnc-common \
         tigervnc-standalone-server \
         xfce4 \
+        xfce4-terminal \
         # Vivado and Vitis dependencies
         libgl1-mesa-glx \
         libgl1-mesa-dri \
@@ -56,6 +59,24 @@ RUN apt-get update \
 
 # TODO: Copy in a default xstartup for VNC
 
+# Set up open source FPGA tools like GHDL and Verilator
+RUN apt-get install -y \
+    # Manually handle Verilator dependencies in case building from source
+    git help2man perl python3 make autoconf g++ flex bison ccache \
+    libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlibc \
+    zlib1g zlib1g-dev \
+    # Install these from the package manager
+    ghdl gktwave
+
+# But build the latest and greatest Verilator from source
+RUN \
+    git clone --recursive -b v4.228 https://github.com/verilator/verilator /usr/local/src/verilator \
+    && cd /usr/local/src/verilator \
+    && autoconf \
+    && ./configure --prefix=/usr/local \
+    && make -j `nproc` && \
+    make install
+
 # Verify expected build and debug tools are present
 RUN apt-get update \
     # Install tools and shells not in common script
@@ -72,7 +93,7 @@ ENV SHELL=/bin/bash \
 # Remove scripts now that we're done with them
 RUN apt-get clean -y && rm -rf /tmp/scripts
 
-# Mount for docker-in-docker 
+# Mount for docker-in-docker
 VOLUME [ "/var/lib/docker" ]
 
 # Fire Docker/Moby script if needed

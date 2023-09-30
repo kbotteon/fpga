@@ -1,7 +1,10 @@
 {
     "hostRequirements": {
+        // Expedites synthesis without driving cost through the roof
         "cpus": 8,
+        // Typical for 6-8 synthesis jobs
         "memory": "32gb",
+        // Vivado and Vitis are enormous
         "storage": "64gb"
     },
 
@@ -11,86 +14,58 @@
     },
 
     "features": {
-    
+
         "ghcr.io/devcontainers/features/common-utils:2": {
-            "username": "codespace",
+            "username": "devcontainer",
             "userUid": "1000",
             "userGid": "1000"
         },
 
-        "ghcr.io/devcontainers/features/python:1": {
-            "version": "3.10.8",
-            "additionalVersions": "3.9.16",
-            "installJupyterlab": "true",
-            "configureJupyterlabAllowOrigin": "*"
-        },
-
-        "ghcr.io/devcontainers/features/ruby:1": {
-            "version": "3.2",
-            "additionalVersions": "3.1"
-        },
-    
-        "ghcr.io/devcontainers/features/java:1": {
-            "version": "17",
-            "additionalVersions": "11",
-            "installGradle": "true",
-            "installMaven": "true"
-        },
-    
         "ghcr.io/devcontainers/features/sshd:1": {
             "version": "latest"
         },
-    
+
         "ghcr.io/devcontainers/features/git:1": {
-            "version": "latest",
+            "version": "2.42.0",
             "ppa": "false"
         },
-    
+
         "ghcr.io/devcontainers/features/git-lfs:1": {
-            "version": "latest"
+            "version": "3.4.0"
         },
-    
-        "ghcr.io/devcontainers/features/github-cli:1": {
-            "version": "latest"
+
+        // For autodoc scripts
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.10.8",
+            "additionalVersions": "3.9.16",
+            "installJupyterlab": "false"
         },
-    
+
+        // For AsciiDoctor Docker container
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "version": "latest"
         }
     },
-    
+
     "overrideFeatureInstallOrder": [
-        "ghcr.io/devcontainers/features/common-utils",
-        "ghcr.io/devcontainers/features/git",
-        "ghcr.io/devcontainers/features/python",
-        "ghcr.io/devcontainers/features/ruby",
-        "ghcr.io/devcontainers/features/java",
-        "ghcr.io/devcontainers/features/sshd",
-        "ghcr.io/devcontainers/features/git-lfs",
-        "ghcr.io/devcontainers/features/github-cli",
-        "ghcr.io/devcontainers/features/docker-in-docker"
+        "ghcr.io/devcontainers/features/common-utils"
     ],
 
-    "remoteUser": "codespace",
-    
-    "containerUser": "codespace",
+    "remoteUser": "devcontainer",
+    "containerUser": "devcontainer",
 
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
-
-    // Configure tool-specific properties.
     "customizations": {
-        // Configure properties specific to VS Code.
         "vscode": {
-            // Set *default* container specific settings.json values on container create.
             "settings": {
-                "python.defaultInterpreterPath": "/home/codespace/.python/current/bin/python3",
-                "lldb.executable": "/usr/bin/lldb"
-            },
-            // Add the IDs of extensions you want installed when the container is created.
-            "extensions": [
-                "GitHub.vscode-pull-request-github"
-            ]
+                // Eliminates need for .editorconfig
+                "editor.renderWhitespace": "all",
+                "files.trimTrailingWhitespace": true,
+                "files.insertFinalNewline": true
+            }
         }
-    }
+    },
+
+    // Run any lingering setup that we couldn't do in the Dockerfile
+    "postCreateCommand": ".devcontainer/final.sh"
+
 }
