@@ -1,0 +1,1 @@
+This is a directory that persists between devcontainer instances. It is symlinked into the home directory.
