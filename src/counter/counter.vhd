@@ -18,12 +18,12 @@ package counter_pkg is
 
 end package counter_pkg;
 
-package counter_pkg_inst is new work.counter_pkg
-    generic map(WIDTH => 10);
-
 --------------------------------------------------------------------------------
 -- Module Logic
 --------------------------------------------------------------------------------
+
+package counter_pkg_inst is new work.counter_pkg
+    generic map(WIDTH => 10);
 
 library ieee;
 use ieee.std_logic_1164.all;

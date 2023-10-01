@@ -15,7 +15,7 @@ always_comb begin : output_wires
     o_count = count;
 end
 
-always_comb begin : select_next
+always_comb begin
     if(i_clear) begin
         next_count = 0;
     end else begin
