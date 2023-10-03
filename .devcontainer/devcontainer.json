@@ -5,7 +5,7 @@
         // Typical for 6-8 synthesis jobs
         "memory": "32gb",
         // Vivado and Vitis are enormous
-        "storage": "64gb"
+        "storage": "128gb"
     },
 
     "build": {
@@ -16,7 +16,7 @@
     "features": {
 
         "ghcr.io/devcontainers/features/common-utils:2": {
-            "username": "devcontainer",
+            "username": "codespace",
             "userUid": "1000",
             "userGid": "1000"
         },
@@ -51,8 +51,8 @@
         "ghcr.io/devcontainers/features/common-utils"
     ],
 
-    "remoteUser": "devcontainer",
-    "containerUser": "devcontainer",
+    "remoteUser": "codespace",
+    "containerUser": "codespace",
 
     "customizations": {
         "vscode": {

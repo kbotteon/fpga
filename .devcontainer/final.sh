@@ -18,3 +18,6 @@ ln -s ${PWD}/.devcontainer/persist ${HOME}/persist
 
 # Use the semi-persistent .ssh between start/stop/rebuild
 ln -s /workspaces/tmp/dot-ssh ${HOME}/.ssh
+
+# Clone devtools so we can use those scripts
+# How exactly do we authenticate to do this?
