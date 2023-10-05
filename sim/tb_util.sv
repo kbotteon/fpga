@@ -7,47 +7,48 @@ package tb_util;
 // Reporting
 //------------------------------------------------------------------------------
 
-localparamt STR_PASS  = " [PASS]"
-localparamt STR_FAIL  = "![FAIL]"
-localparamt STR_INFO  = " [INFO]"
-localparamt STR_ERROR = "![ ERR]"
-localparamt STR_DIV   = " [----]"
-localparamt STR_NONE  = " [    ]"
+localparam STR_PASS  = " [PASS]";
+localparam STR_FAIL  = "![FAIL]";
+localparam STR_INFO  = " [INFO]";
+localparam STR_ERROR = "![ ERR]";
+localparam STR_DIV   = " [----]";
+localparam STR_NONE  = " [    ]";
 
-function automatic tb_new_section;
-    input string section_name;
-    $display("\n%s%s", STR_DIV, name);
+function automatic tb_new_section (
+    input string section_name
+);
+    $display("\n%s%s", STR_DIV, section_name);
 endfunction
 
 //------------------------------------------------------------------------------
 // GTest Macros
 //------------------------------------------------------------------------------
 
-function automatic EXPECT_TRUE(
+task automatic EXPECT_TRUE(
     input integer value,
     input string comment
 );
 
-    if(value)
+    if(value > 0)
         $display("%s %s", STR_PASS, comment);
     else
         $display("%s %s", STR_FAIL, comment);
 
-endfunction
+endtask
 
-function automatic EXPECT_FALSE(
+task automatic EXPECT_FALSE(
     input integer value,
     input string comment
 );
 
-    if(!value)
+    if(!(value > 0))
         $display("%s %s", STR_PASS, comment);
     else
         $display("%s %s", STR_FAIL, comment);
 
-endfunction
+endtask
 
-function automatic EXPECT_EQ(
+task automatic EXPECT_EQ(
     input integer actual,
     input integer expected,
     input string comment
@@ -58,9 +59,9 @@ function automatic EXPECT_EQ(
     else
         $display("%s %s, 0x%x", STR_FAIL, comment, actual);
 
-endfunction
+endtask
 
-function automatic EXPECT_NE(
+task automatic EXPECT_NE(
     input integer actual,
     input integer expected,
     input string comment
@@ -71,9 +72,9 @@ function automatic EXPECT_NE(
     else
         $display("%s %s, 0x%x", STR_FAIL, comment, actual);
 
-endfunction
+endtask
 
-function automatic EXPECT_LE(
+task automatic EXPECT_LE(
     input integer value,
     input integer limit,
     input string comment
@@ -82,11 +83,11 @@ function automatic EXPECT_LE(
     if(value <= limit)
         $display("%s %s", STR_PASS, comment);
     else
-        $display("%s %s, 0x%x", STR_FAIL, comment, actual);
+        $display("%s %s, 0x%x", STR_FAIL, comment, value);
 
-endfunction
+endtask
 
-function automatic EXPECT_LT(
+task automatic EXPECT_LT(
     input integer value,
     input integer limit,
     input string comment
@@ -95,11 +96,11 @@ function automatic EXPECT_LT(
     if(value < limit)
         $display("%s %s", STR_PASS, comment);
     else
-        $display("%s %s, 0x%x", STR_FAIL, comment, actual);
+        $display("%s %s, 0x%x", STR_FAIL, comment, value);
 
-endfunction
+endtask
 
-function automatic EXPECT_GE(
+task automatic EXPECT_GE(
     input integer value,
     input integer limit,
     input string comment
@@ -108,11 +109,11 @@ function automatic EXPECT_GE(
     if(value >= limit)
         $display("%s %s", STR_PASS, comment);
     else
-        $display("%s %s, 0x%x", STR_FAIL, comment, actual);
+        $display("%s %s, 0x%x", STR_FAIL, comment, value);
 
-endfunction
+endtask
 
-function automatic EXPECT_GT(
+task automatic EXPECT_GT(
     input integer value,
     input integer limit,
     input string comment
@@ -121,6 +122,8 @@ function automatic EXPECT_GT(
     if(value < limit)
         $display("%s %s", STR_PASS, comment);
     else
-        $display("%s %s, 0x%x", STR_FAIL, comment, actual);
+        $display("%s %s, 0x%x", STR_FAIL, comment, value);
 
-endfunction
+endtask
+
+endpackage
