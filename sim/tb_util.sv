@@ -119,7 +119,7 @@ task automatic EXPECT_GT(
     input string comment
 );
 
-    if(value < limit)
+    if(value > limit)
         $display("%s %s", STR_PASS, comment);
     else
         $display("%s %s, 0x%x", STR_FAIL, comment, value);
