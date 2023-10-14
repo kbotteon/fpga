@@ -2,6 +2,7 @@
 * \file
 * \brief A simple up-counter with synchronous clear and enable
 *******************************************************************************/
+`timescale 1ns/1ns
 
 module counter #(
     parameter WIDTH=10

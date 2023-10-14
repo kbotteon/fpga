@@ -5,7 +5,7 @@
 * Wrapping the DUT becomes important when we want to apply DONT_TOUCH or other
 * attributes to preserve net names for inspection or otherwise control synthesis
 *******************************************************************************/
-
+`timescale 1ns/1ns
 
 module sandbox (
     (* DONT_TOUCH="TRUE" *)
