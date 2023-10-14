@@ -11,7 +11,7 @@ module tb;
 import tb_util::*;
 
 parameter WIDTH = 12;
-parameter PLL_LOCK_TIME = 1us;
+parameter PLL_LOCK_TIME = 100ns;
 parameter CLK_T_2 = 5ns;
 
 logic i_clk;
@@ -37,21 +37,21 @@ initial begin : clocks
     forever #(CLK_T_2) i_clk = ~i_clk;
 end
 
-task test_increment(
-    input logic dut_clk,
-    input logic dut_en,
-    input type(o_count) dut_val
+task automatic test_increment(
+    ref logic dut_clk,
+    ref logic dut_en,
+    ref type(o_count) dut_val
 );
     dut_en = 1;
     repeat(10) @(posedge dut_clk);
     dut_en = 0;
-    EXPECT_EQ(32'(dut_val), 32'(10), "increment");
+    EXPECT_EQ(32'(dut_val), 32'(10), "increment value");
 endtask
 
-task test_hold(
-    input logic dut_clk,
-    input logic dut_en,
-    input type(o_count) dut_val
+task automatic test_hold(
+    ref logic dut_clk,
+    ref logic dut_en,
+    ref type(o_count) dut_val
 );
     type(o_count) start;
     type(o_count) stop;
@@ -59,27 +59,27 @@ task test_hold(
     dut_en = 0;
     repeat(10) @(posedge dut_clk);
     stop = dut_val;
-    EXPECT_EQ(32'(stop), 32'(start), "hold");
+    EXPECT_EQ(32'(stop), 32'(start), "hold value");
 endtask
 
-task test_clear(
-    input logic dut_clk,
-    input logic dut_clear,
-    input type(o_count) dut_val
+task automatic test_clear(
+    ref logic dut_clk,
+    ref logic dut_clear,
+    ref type(o_count) dut_val
 );
-    type(o_count) start;
-    type(o_count) stop;
-    start = dut_val;
-    EXPECT_GT(32'(start), '0, "clear");
+    EXPECT_GT(32'(dut_val), '0, "clear start value");
     dut_clear = 1;
     @(posedge dut_clk);
     dut_clear = 0;
-    stop = dut_val;
-    EXPECT_EQ(32'(stop), '0, "clear");
+    @(posedge dut_clk);
+    EXPECT_EQ(32'(dut_val), '0, "clear final value");
 endtask
 
 // Test Harness
 initial begin : test
+
+    i_en = 0;
+    i_clear = 0;
 
     i_rst = 1;
     #(PLL_LOCK_TIME)

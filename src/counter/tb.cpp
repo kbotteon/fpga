@@ -1,5 +1,8 @@
 /*******************************************************************************
 * Verilator testbench for counter.sv
+*
+* TODO: Update this per:
+* https://github.com/verilator/verilator/blob/master/examples/make_tracing_c/sim_main.cpp
 *******************************************************************************/
 #include <verilated.h>
 #include <verilated_vcd_c.h>

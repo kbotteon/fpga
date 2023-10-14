@@ -1,3 +1,8 @@
+/*******************************************************************************
+* \file
+* \brief A simple up-counter with synchronous clear and enable
+*******************************************************************************/
+
 module counter #(
     parameter WIDTH=10
 )(
@@ -16,6 +21,7 @@ always_comb begin : output_wires
 end
 
 always_comb begin
+    // i_en has priority below, so we mux in 0 here too
     if(i_clear) begin
         next_count = 0;
     end else begin
@@ -28,6 +34,8 @@ always_ff@(posedge i_clk) begin
         count <= 0;
     end else if(i_en) begin
         count <= next_count;
+    end else if (i_clear) begin
+        count <= 0;
     end
 end
 
