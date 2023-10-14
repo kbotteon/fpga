@@ -1,0 +1,8 @@
+# Project file for xsim
+
+sv work ../../sim/tb_util.sv
+sv work counter.sv
+sv work tb.sv
+
+verilog work ../../lib/glbl.v
+nosort
