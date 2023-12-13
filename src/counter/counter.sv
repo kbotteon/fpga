@@ -22,7 +22,6 @@ always_comb begin : output_wires
 end
 
 always_comb begin
-    // i_en has priority below, so we mux in 0 here too
     if(i_clear) begin
         next_count = 0;
     end else begin
