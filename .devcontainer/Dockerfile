@@ -1,30 +1,29 @@
 # Xilinx tools rely on Ubuntu 20.04
 FROM ubuntu:20.04
 
+RUN dpkg --add-architecture i386
+
 # Update the system and install the basic
+# (Modern) Git is covered by devcontainer.json
 RUN \
     apt-get update \
     && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         make \
         unzip \
-        git \
-        git-lfs \
         screen \
         tmux \
         software-properties-common
 
 # Install FPGA tooling dependencies
+# (Modern) Python is covered by devcontainer.json
 RUN \
     apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        # Python 3.10 built from source since 3.9 is latest in apt
         build-essential \
         cmake \
         clang \
         gdb \
-        # By default pip is not available in the buildpacks image
-        python-pip-whl \
         # This sets up a graphical environment and VNC for Xilinx GUI tools
         tigervnc-common \
         tigervnc-standalone-server \

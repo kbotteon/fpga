@@ -37,8 +37,8 @@
 
         // For autodoc scripts
         "ghcr.io/devcontainers/features/python:1": {
-            "version": "3.10.8",
-            "additionalVersions": "3.9.16",
+            "version": "3.11",
+            "additionalVersions": ["3.9", "3.10"],
             "installJupyterlab": "false"
         },
 
@@ -54,7 +54,7 @@
     "customizations": {
         "vscode": {
             "settings": {
-                // Eliminates need for .editorconfig
+                // Eliminates .editorconfig
                 "editor.renderWhitespace": "all",
                 "files.trimTrailingWhitespace": true,
                 "files.insertFinalNewline": true
@@ -62,7 +62,7 @@
         }
     },
 
-    // Run any lingering setup that we couldn't do in the Dockerfile
+    // Run remaining setup not in the Dockerfile
     "postCreateCommand": ".devcontainer/final.sh"
 
 }
