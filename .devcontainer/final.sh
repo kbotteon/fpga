@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
-# These persist between start/stop/rebuild but not delete/create
-mkdir -p /workspaces/tmp
-mkdir -p /workspaces/tools
+TOOLS_DIR="/workspaces/tools"
+TMP_DIR="/workspaces/tmp"
 
-# For the life of a Codespace, retain installed ssh keys and config
-mkdir -p /workspaces/tmp/dot-ssh
-chmod 700 /workspaces/tmp/dot-ssh
+# These persist between start/stop/rebuild but not delete/create
+mkdir -p ${TMP_DIR}
+mkdir -p ${TOOLS_DIR}
+
+# Clone devtools so we can use those scripts
+cd ${TOOLS_DIR} && git clone https://github.com/kbotteon/devtools.git
 
 # Set up the default xstartup
 mkdir -p ${HOME}/.vnc
 chmod 755 ${HOME}/.vnc
-cp ${PWD}/.devcontainer/persist/xstartup ${HOME}/.vnc/
+ln -sf ${TOOLS_DIR}/devtools/vnc/xstatup-xfce ${HOME}/.vnc/xstartup
+
+# For the life of a Codespace, retain installed ssh keys and config
+mkdir -p ${TMP_DIR}/dot-ssh
+chmod 700 ${TMP_DIR}/dot-ssh
+ln -s ${TMP_DIR}/dot-ssh ${HOME}/.ssh
 
 # Link tracked persistent container files into home directory
 ln -s ${PWD}/.devcontainer/persist ${HOME}/persist
-
-# Use the semi-persistent .ssh between start/stop/rebuild
-ln -s /workspaces/tmp/dot-ssh ${HOME}/.ssh
-
-# Clone devtools so we can use those scripts
-# How exactly do we authenticate to do this?

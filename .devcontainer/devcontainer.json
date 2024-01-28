@@ -47,10 +47,6 @@
         }
     },
 
-    "overrideFeatureInstallOrder": [
-        "ghcr.io/devcontainers/features/common-utils"
-    ],
-
     "remoteUser": "codespace",
     "containerUser": "codespace",
 

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-unset SESSION_MANAGER
-unset DBUS_SESSION_BUS_ADDRESS
-xsetroot -solid grey
-startxfce4 &
