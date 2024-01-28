@@ -1,12 +1,9 @@
 {
     "hostRequirements": {
-        // Expedites synthesis without driving cost through the roof
-        "cpus": 8,
-        // Typical for 6-8 synthesis jobs
-        "memory": "32gb",
-        // Vivado and Vitis are enormous
-        // This probably isn't enough
-        "storage": "64gb"
+        // Probably enough for Verilator, GHDL, GTKWave, etc.
+        "cpus": 4,
+        "memory": "16gb",
+        "storage": "32gb"
     },
 
     "build": {
@@ -19,7 +16,9 @@
         "ghcr.io/devcontainers/features/common-utils:2": {
             "username": "codespace",
             "userUid": "1000",
-            "userGid": "1000"
+            "userGid": "1000",
+            "installZsh": "false",
+            "installOhMyZsh": "false"
         },
 
         "ghcr.io/devcontainers/features/sshd:1": {
@@ -35,14 +34,12 @@
             "version": "3.4.0"
         },
 
-        // For autodoc scripts
         "ghcr.io/devcontainers/features/python:1": {
-            "version": "3.11",
-            "additionalVersions": ["3.9", "3.10"],
+            "version": "3.11.7",
+            "additionalVersions": "3.10.13",
             "installJupyterlab": "false"
         },
 
-        // For AsciiDoctor Docker container
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "version": "latest"
         }

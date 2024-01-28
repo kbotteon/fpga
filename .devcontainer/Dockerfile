@@ -7,7 +7,6 @@ RUN dpkg --add-architecture i386
 # (Modern) Git is covered by devcontainer.json
 RUN \
     apt-get update \
-    && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         make \
         unzip \
@@ -43,7 +42,7 @@ RUN \
 
 # Set up open source FPGA tools like GHDL and Verilator
 RUN \
-    apt-get update && apt-get install -y \
+    apt-get update && apt-get install -y --no-install-recommends \
     # Manually handle Verilator dependencies in case building from source
     git help2man perl python3 make autoconf g++ flex bison ccache \
     libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlibc \

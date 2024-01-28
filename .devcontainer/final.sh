@@ -19,6 +19,3 @@ ln -sf ${TOOLS_DIR}/devtools/vnc/xstatup-xfce ${HOME}/.vnc/xstartup
 mkdir -p ${TMP_DIR}/dot-ssh
 chmod 700 ${TMP_DIR}/dot-ssh
 ln -s ${TMP_DIR}/dot-ssh ${HOME}/.ssh
-
-# Link tracked persistent container files into home directory
-ln -s ${PWD}/.devcontainer/persist ${HOME}/persist
