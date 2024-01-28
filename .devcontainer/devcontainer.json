@@ -5,7 +5,8 @@
         // Typical for 6-8 synthesis jobs
         "memory": "32gb",
         // Vivado and Vitis are enormous
-        "storage": "128gb"
+        // This probably isn't enough
+        "storage": "64gb"
     },
 
     "build": {
