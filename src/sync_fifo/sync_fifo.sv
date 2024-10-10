@@ -2,8 +2,6 @@
 * \file
 * \brief A synchronous FIFO
 *******************************************************************************/
-`timescale 1ns/1ns
-
 module sync_fifo #(
     parameter WIDTH = 16,
     parameter DEPTH = 16,
