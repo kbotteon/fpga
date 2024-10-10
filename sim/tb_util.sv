@@ -59,7 +59,7 @@ task automatic EXPECT_EQ(
     if(expected == actual)
         $display("%s %s", STR_PASS, comment);
     else
-        $display("%s %s, 0x%x", STR_FAIL, comment, actual);
+        $display("%s %s, 0x%x != 0x%x", STR_FAIL, comment, actual, expected);
 
 endtask
 

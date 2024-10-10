@@ -47,9 +47,7 @@ logic [ADDR_WIDTH-1:0] write_addr = 0;
 logic [ADDR_WIDTH:0] occupancy = 0;
 
 logic do_read;
-logic read_allowed;
 logic do_write;
-logic write_allowed;
 
 //------------------------------------------------------------------------------
 // Output Logic
@@ -57,6 +55,7 @@ logic write_allowed;
 
 always_comb begin
     o_empty = occupancy == 0;
+    o_full = occupancy == DEPTH;
 end
 
 //------------------------------------------------------------------------------
@@ -64,10 +63,11 @@ end
 //------------------------------------------------------------------------------
 
 // In Xilinx devices, distributed RAM repurposes CLBs into a RAM with density
-// between using CLB flops and BRAM
+// between using CLB flops and BRAM; good for small FIFOs without burning
+// an entire BRAM or URAM primitive
 (* RAM_STYLE="DISTRIBUTED" *) logic [WIDTH-1:0] ram [0:DEPTH-1];
 
-// Xilinx devices can initialize CLBs and BRAMs using the bitstream
+// Xilinx devices can initialize CLBs and BRAMs (but not URAM) using the bitstream
 generate
     if(ARCH == "Xilinx") begin
         initial for(int addr = 0; addr < DEPTH; addr = addr + 1) begin
@@ -96,20 +96,22 @@ end
 // Counters
 //------------------------------------------------------------------------------
 
+// FIXME: Add predictive logic and register these outputs
 always_comb begin : access_triggers
-    do_read = i_rd_incr && read_allowed;
-    do_write = i_wr_en && write_allowed;
-end
 
-always_comb begin : access_permissions
-    write_allowed = occupancy != DEPTH;
-    read_allowed = occupancy != 0;
+    do_read = i_rd_incr && occupancy != 0;
+    o_rd_err = i_rd_incr && occupancy == 0;
+
+    do_write = i_wr_en && occupancy != DEPTH;
+    o_wr_err = i_wr_en && occupancy == DEPTH;
+
 end
 
 always_ff@(posedge i_clk) begin : occupancy_counter
     if(i_rst) begin
         occupancy <= '0;
     end else begin
+
         if(do_read && !do_write) begin
             occupancy <= occupancy + 1;
         end else if(do_write && !do_read) begin
@@ -117,14 +119,18 @@ always_ff@(posedge i_clk) begin : occupancy_counter
         end else begin // if((do_write && do_read) || (!do_write && !do-read))
             occupancy <= occupancy;
         end
+
     end
 end
 
 always_ff@(posedge i_clk) begin : access_pointers
     if(i_rst) begin
+
         read_addr <= '0;
         write_addr <= '0;
+
     end else begin
+
         // Read pointer
         if(do_read) begin
             // Roll over the counter
@@ -134,6 +140,7 @@ always_ff@(posedge i_clk) begin : access_pointers
                 read_addr <= read_addr + 1;
             end
         end
+
         // Write pointer
         if(do_write) begin
             // Roll over the counter
@@ -143,6 +150,7 @@ always_ff@(posedge i_clk) begin : access_pointers
                 write_addr <= write_addr + 1;
             end
         end
+
     end
 end
 
