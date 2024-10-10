@@ -20,7 +20,7 @@ ROOT_DIR = os.getcwd()
 
 ################################################################################
 
-def shell(command, logpath, cwd):
+def shell(command, logpath, cwd) -> None:
     """
     Run a shell command, logging to both the terminal and logpath
     """
@@ -37,7 +37,7 @@ def shell(command, logpath, cwd):
 
 ################################################################################
 
-def ap_validate_path(path: str):
+def ap_validate_path(path: str) -> str:
 
     full_path = pathlib(path).resolve()
 
@@ -67,7 +67,7 @@ def create_parser() -> argparse.ArgumentParser:
 
 ################################################################################
 
-def main(args):
+def main(args) -> None:
 
     MODULE_PATH = pathlib.Path(args.modname).resolve()
     WORK_PATH = f"{MODULE_PATH}/{WORK_DIR}"
