@@ -46,7 +46,7 @@ task automatic test_increment(
     dut_en = 1;
     repeat(10) @(posedge dut_clk);
     dut_en = 0;
-    EXPECT_EQ(32'(dut_val), 32'(10), "increment value");
+    EXPECT_EQ(32'(dut_val), 32'(10), "Increment value");
 endtask
 
 task automatic test_hold(
@@ -60,7 +60,7 @@ task automatic test_hold(
     dut_en = 0;
     repeat(10) @(posedge dut_clk);
     stop = dut_val;
-    EXPECT_EQ(32'(stop), 32'(start), "hold value");
+    EXPECT_EQ(32'(stop), 32'(start), "Hold value");
 endtask
 
 task automatic test_clear(
@@ -68,12 +68,12 @@ task automatic test_clear(
     ref logic dut_clear,
     ref type(o_count) dut_val
 );
-    EXPECT_GT(32'(dut_val), '0, "clear start value");
+    EXPECT_GT(32'(dut_val), '0, "Clear start value");
     dut_clear = 1;
     @(posedge dut_clk);
     dut_clear = 0;
     @(posedge dut_clk);
-    EXPECT_EQ(32'(dut_val), '0, "clear final value");
+    EXPECT_EQ(32'(dut_val), '0, "Clear final value");
 endtask
 
 // Test Harness
