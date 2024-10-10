@@ -1,0 +1,5 @@
+sv work ../../sim/tb_util.sv
+sv work pdetect.sv
+sv work tb.sv
+verilog work ../../lib/glbl.v
+nosort
