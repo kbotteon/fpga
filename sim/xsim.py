@@ -32,6 +32,9 @@ def shell(command, logpath, cwd):
         sys.stdout.write(result.stdout)
         log_obj.write(result.stdout)
 
+        if result.returncode != 0:
+            raise subprocess.CalledProcessError(result.returncode, command)
+
 ################################################################################
 
 def ap_validate_path(path: str):

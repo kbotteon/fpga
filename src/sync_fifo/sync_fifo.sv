@@ -2,12 +2,12 @@
 * \file
 * \brief A synchronous FIFO
 *******************************************************************************/
-`timescale C_TIMESCALE
+`timescale 1ns/1ns
 
 module sync_fifo #(
     parameter WIDTH = 16,
     parameter DEPTH = 16,
-    parameter TARGET = "Xilinx"
+    parameter ARCH = "Xilinx" // "Generic"
 )(
     input logic i_clk,
     input logic i_rst,
@@ -25,9 +25,19 @@ module sync_fifo #(
 
 localparam ADDR_WIDTH = $clog2(DEPTH)-1;
 
-initial assert(WIDTH <= 256*8196)
-    else $error("That's a massive FIFO");
+//------------------------------------------------------------------------------
+// Static Asserts
+//------------------------------------------------------------------------------
+`ifndef SYNTHESIS
 
+initial begin
+
+    assert(WIDTH <= 256 && DEPTH <= 32*1024)
+        else $error("That's a massive FIFO");
+
+end
+
+`endif
 //------------------------------------------------------------------------------
 // Nets
 //------------------------------------------------------------------------------
@@ -42,6 +52,14 @@ logic do_write;
 logic write_allowed;
 
 //------------------------------------------------------------------------------
+// Output Logic
+//------------------------------------------------------------------------------
+
+always_comb begin
+    o_empty = occupancy == 0;
+end
+
+//------------------------------------------------------------------------------
 // Memories
 //------------------------------------------------------------------------------
 
@@ -51,7 +69,7 @@ logic write_allowed;
 
 // Xilinx devices can initialize CLBs and BRAMs using the bitstream
 generate
-    if(TARGET == "Xilinx") begin
+    if(ARCH == "Xilinx") begin
         initial for(int addr = 0; addr < DEPTH; addr = addr + 1) begin
             ram[addr] = 0;
         end
@@ -70,7 +88,7 @@ always_ff@(posedge i_clk) begin
     if(i_rst) begin
         o_data <= '0;
     end else begin
-        o_data <= ram[read_addr]
+        o_data <= ram[read_addr];
     end
 end
 
@@ -79,7 +97,7 @@ end
 //------------------------------------------------------------------------------
 
 always_comb begin : access_triggers
-    do_read == i_rd_incr && read_allowed;
+    do_read = i_rd_incr && read_allowed;
     do_write = i_wr_en && write_allowed;
 end
 

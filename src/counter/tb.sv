@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Testbench for counter.sv and counter.vhd
+* \brief Testbench for counter.sv and counter.vhd
 *
 * Since the module names are the same, you must update the simulation scripts
 * to choose the implementation you wish to simulate, rather than simulating both
