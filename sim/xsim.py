@@ -12,6 +12,7 @@ import sys
 import argparse
 import re
 import pathlib
+import signal
 
 ################################################################################
 
@@ -26,14 +27,34 @@ def shell(command, logpath, cwd) -> None:
     """
     with open(logpath, "a") as log_obj:
 
-        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE,
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, text=True, cwd=cwd)
 
-        sys.stdout.write(result.stdout)
-        log_obj.write(result.stdout)
+        try:
+            # Write command output until it finishes
+            while True:
+                line = process.stdout.readline()
+                if line == '' and process.poll() is not None:
+                    break
+                if line is not None:
+                    sys.stdout.write(line)
+                    log_obj.write(line)
 
-        if result.returncode != 0:
-            raise subprocess.CalledProcessError(result.returncode, command)
+            # FIXME: Is this necessary if process.poll() is None
+            process.wait()
+
+        except KeyboardInterrupt:
+            # I guess xsim does not respond to SIGTERM when a sim is running
+            # process.terminate()
+            os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+            try:
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                process.wait()
+
+        if process.returncode not in (0, -signal.SIGTERM, -signal.SIGKILL):
+            raise subprocess.CalledProcessError(process.returncode, command)
 
 ################################################################################
 
