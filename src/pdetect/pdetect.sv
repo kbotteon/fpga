@@ -3,7 +3,7 @@
 * \brief A data stream pattern detector
 *******************************************************************************/
 module pdetect #(
-    PATTERN = 32'hABCD
+    PATTERN = 32'h0A0B0C0D
 )(
     input logic i_clk,
     input logic i_rst,
@@ -15,10 +15,10 @@ logic [7:0] pipeline [3:0];
 
 always_comb begin
     o_detected =
-        pipeline[3] == PATTERN[3] &&
-        pipeline[2] == PATTERN[2] &&
-        pipeline[1] == PATTERN[1] &&
-        pipeline[0] == PATTERN[0];
+        pipeline[3] == PATTERN[31:24] &&
+        pipeline[2] == PATTERN[23:16] &&
+        pipeline[1] == PATTERN[15:8] &&
+        pipeline[0] == PATTERN[7:0];
 end
 
 always_ff@(posedge i_clk) begin
