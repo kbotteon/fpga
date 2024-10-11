@@ -23,7 +23,9 @@ ROOT_DIR = os.getcwd()
 
 def shell(command, logpath, cwd) -> None:
     """
-    Run a shell command, logging to both the terminal and logpath
+    Run a shell command, logging to both the terminal and logpath. If this
+    script is interrupted while the process is running, then all child processes
+    will be terminated, or if necessary killed.
     """
     with open(logpath, "a") as log_obj:
 
@@ -44,8 +46,8 @@ def shell(command, logpath, cwd) -> None:
             process.wait()
 
         except KeyboardInterrupt:
-            # I guess xsim does not respond to SIGTERM when a sim is running
-            # process.terminate()
+            # Either xsim does not respond to SIGTERM when a sim is running or
+            # it spawns another xsim child process to run the actual sim
             os.killpg(os.getpgid(process.pid), signal.SIGTERM)
             try:
                 process.wait(timeout=5)

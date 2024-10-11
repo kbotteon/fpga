@@ -1,2 +1,4 @@
 .venv
 **/.xsim/
+xsim*.log
+xsim*.jou
