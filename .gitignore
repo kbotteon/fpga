@@ -1,4 +1,12 @@
-.venv
+
+# Xilinx tool working directories
 **/.xsim/
+**/.Xil
+
+# Xilinx logs
 xsim*.log
 xsim*.jou
+vivado*.str
+
+# Python working directories
+.venv
