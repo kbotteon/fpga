@@ -33,39 +33,39 @@ end
 task automatic apply_pattern (
     input logic [31:0] pattern
 );
+    i_m_valid <= 1;
+    i_m_data <= pattern[31:24];
     @(posedge i_clk);
-    i_m_valid = 1;
-    i_m_data = pattern[31:24];
+    i_m_data <= pattern[23:16];
     @(posedge i_clk);
-    i_m_data = pattern[23:16];
+    i_m_data <= pattern[15:8];
     @(posedge i_clk);
-    i_m_data = pattern[15:8];
+    i_m_data <= pattern[7:0];
     @(posedge i_clk);
-    i_m_data = pattern[7:0];
+    i_m_valid <= 0;
     @(posedge i_clk);
-    i_m_valid = 0;
 endtask
 
 initial begin : test_harness
 
-    i_m_data = 0;
-    i_m_valid = 0;
+    i_m_data <= 0;
+    i_m_valid <= 0;
     // Assume subordinate is always ready
-    i_s_ready = 1;
+    i_s_ready <= 1;
 
-    i_rst = 1;
+    i_rst <= 1;
     repeat(10) @(posedge i_clk);
 
-    i_rst = 0;
+    i_rst <= 0;
     repeat(10) @(posedge i_clk);
 
     apply_pattern({8'h0A, 8'h0B, 8'h0C, 8'h0D});
     EXPECT_EQ(o_detected, 1'b1, "Pattern detected");
 
     @(posedge i_clk);
-    EXPECT_EQ(o_detected, 1'b0, "Pattern detected deasserts");
+    EXPECT_EQ(o_detected, 1'b1, "Pattern detected does not deassert while pipeline stalled");
 
-    apply_pattern({8'h0A, 8'h0A, 8'h0A, 8'h0A});
+    apply_pattern({8'h0F, 8'h0F, 8'h0F, 8'h0F});
     EXPECT_EQ(o_detected, 1'b0, "Invalid pattern not detected");
 
     apply_pattern({8'h0A, 8'h0B, 8'h0C, 8'h0D});

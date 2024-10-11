@@ -9,7 +9,7 @@
 * Use pdetect_stream_dly if your downstream logic relies on o_detected.
 *******************************************************************************/
 module pdetect_stream_mon #(
-    PATTERN = 32'hABCD
+    PATTERN = 32'h0A0B0C0D
 )(
     input logic i_clk,
     input logic i_rst,
@@ -56,8 +56,10 @@ always_ff@(posedge i_clk) begin
         for(int stage = 0; stage < $size(pipeline); stage = stage + 1) begin
             pipeline[stage] <= 0;
         end
-    end else if(pipeline_enable) begin
-        pipeline <= {pipeline[$size(pipeline)-2:0], i_m_data};
+    end else begin
+        if(pipeline_enable) begin
+            pipeline <= {pipeline[$size(pipeline)-2:0], i_m_data};
+        end
     end
 end
 
