@@ -7,6 +7,9 @@
 * data being passed through.
 *
 * Use pdetect_stream_dly if your downstream logic relies on o_detected.
+*
+* \copyright 2024 Kyle Botteon
+* \copyright This file is part of HERMIT. Refer to LICENSE in the repository.
 *******************************************************************************/
 module pdetect_stream_mon #(
     PATTERN = 32'h0A0B0C0D

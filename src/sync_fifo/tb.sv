@@ -1,5 +1,7 @@
 /*******************************************************************************
 * \brief Testbench for sync_fifo.sv
+* \copyright 2024 Kyle Botteon
+* \copyright This file is part of HERMIT. Refer to LICENSE in the repository.
 *******************************************************************************/
 `timescale 1ns/1ns
 

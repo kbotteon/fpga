@@ -1,6 +1,8 @@
 /*******************************************************************************
 * \file
 * \brief A data stream pattern detector
+* \copyright 2024 Kyle Botteon
+* \copyright This file is part of HERMIT. Refer to LICENSE in the repository.
 *******************************************************************************/
 module pdetect #(
     PATTERN = 32'h0A0B0C0D

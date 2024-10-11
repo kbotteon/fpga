@@ -1,6 +1,8 @@
 /*******************************************************************************
 * \file
 * \brief A synchronous FIFO
+* \copyright 2024 Kyle Botteon
+* \copyright This file is part of HERMIT. Refer to LICENSE in the repository.
 *******************************************************************************/
 module sync_fifo #(
     parameter WIDTH = 16,
