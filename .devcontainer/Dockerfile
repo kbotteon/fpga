@@ -41,7 +41,7 @@ RUN apt-get update \
 
 # Set up open source FPGA tools like GHDL and Verilator
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         # Manually handle Verilator dependencies in case building from source
         git help2man perl python3 make autoconf g++ flex bison ccache \
         libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlibc \
