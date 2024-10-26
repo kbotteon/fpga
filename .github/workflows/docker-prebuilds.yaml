@@ -31,4 +31,4 @@ jobs:
           context: .
           file: .devcontainer/Dockerfile
           push: true
-          tages: ghcr.io/${{ github.repository }}/fpga-tools:latest
+          tags: ghcr.io/${{ github.repository }}/fpga-tools:latest
