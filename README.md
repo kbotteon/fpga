@@ -18,6 +18,4 @@ You can start start a VNC session as follows:
 1. Open your Codespaces built from this repository in VSCode for source editing
 1. From the command line, `vncserver -geometry 2560x1440 :1` or whatever resolution you prefer
 1. VSCode will automatically create a port forward to 5901
-1. Point a VNC viewer to localhost:5901 and connect
-
-You will need to create an `xstartup` file in `~/.vnc/` until we get a default file configured.
+1. Point a VNC viewer to `localhost:5901` and connect
