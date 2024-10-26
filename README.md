@@ -19,3 +19,19 @@ You can start start a VNC session as follows:
 1. From the command line, `vncserver -geometry 2560x1440 :1` or whatever resolution you prefer
 1. VSCode will automatically create a port forward to 5901
 1. Point a VNC viewer to `localhost:5901` and connect
+
+### Docker
+
+The underlying Dockerfile for the development container is described in `.devcontainer/Dockerfile` and is build automatially when a Codespace is created. To use it locally, or to debug, you can build it yourself:
+
+```
+cd lib/fpga/.devcontainer
+docker build -t fpga_tools:latest .
+```
+
+You can run the image interactively, including forwarding a port for VNC with:
+
+```
+docker run -it --name fpga_tools_1 -p 5901:5901 fpga_tools:latest
+docker exec -it fpga_tools_1 /bin/bash
+```
