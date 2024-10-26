@@ -89,6 +89,20 @@ def create_parser() -> argparse.ArgumentParser:
         help="The module path"
     )
 
+    ap.add_argument(
+        "-g",
+        "--gui",
+        action="store_true",
+        help="Open the xsim waveform viewer after running sim"
+    )
+
+    ap.add_argument(
+        "-n",
+        "--nosim",
+        action="store_true",
+        help="Open waveform without re-running sim"
+    )
+
     return ap
 
 ################################################################################
@@ -104,14 +118,20 @@ def main(args) -> None:
 
     LOG_PATH = f"{WORK_PATH}/xsim.log"
 
-    xvlog_cmd = f"xvlog --incr --relax -L uvm -prj {MODULE_PATH}/xsim.prj"
-    shell(xvlog_cmd, LOG_PATH, WORK_PATH)
+    if not args.nosim:
 
-    xelab_cmd = f"xelab --incre --debug typical --relax --mt 8 -L work -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_behav work.tb work.glbl"
-    shell(xelab_cmd, LOG_PATH, WORK_PATH)
+        xvlog_cmd = f"xvlog --incr --relax -L uvm -prj {MODULE_PATH}/xsim.prj"
+        shell(xvlog_cmd, LOG_PATH, WORK_PATH)
 
-    xsim_cmd = f"xsim tb_behav -key {{Behavioral:sim_1:Functional:tb}} -tclbatch {MODULE_PATH}/xsim.tcl"
-    shell(xsim_cmd, LOG_PATH, WORK_PATH)
+        xelab_cmd = f"xelab --incre --debug typical --relax --mt 8 -L work -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_behav work.tb work.glbl"
+        shell(xelab_cmd, LOG_PATH, WORK_PATH)
+
+        xsim_cmd = f"xsim tb_behav -key {{Behavioral:sim_1:Functional:tb}} -tclbatch {MODULE_PATH}/xsim.tcl"
+        shell(xsim_cmd, LOG_PATH, WORK_PATH)
+
+    if args.gui:
+        wave_cmd = f"xsim {MODULE_PATH}/{WORK_DIR}/tb_behav.wdb -gui"
+        shell(wave_cmd, LOG_PATH, WORK_PATH)
 
 ################################################################################
 

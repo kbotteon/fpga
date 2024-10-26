@@ -41,7 +41,7 @@ The port forward is for VNC. It assumes you use display `:1` when launching. To 
 
 ----
 docker stop fpga_tools_1
-rm fpga_tools_1
+docker rm fpga_tools_1
 ----
 
 You must remove and recreate the image to change port mappings. Otherwise, skip the remove step and reattach with:
