@@ -1,7 +1,7 @@
 # Xilinx tools rely on Ubuntu 22.04
 FROM ubuntu:22.04
 
-ARG INSTALL="apt-get update DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends"
+ARG INSTALL="apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends"
 
 RUN dpkg --add-architecture i386
 
