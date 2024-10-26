@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+################################################################################
+# Runs after a build to finalize image
+################################################################################
 
 TOOLS_DIR="/workspaces/tools"
 TMP_DIR="/workspaces/tmp"
