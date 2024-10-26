@@ -6,7 +6,7 @@ Run xsim for a given module, assuming the required configuration files
 are present in its folder tree.
 
 (C) 2024 Kyle Botteon
-This file is part of HERMIT. Refer to LICENSE in the repository.
+This file is part of HERMIT. Refer to LICENSE in that repository.
 """
 
 import os

@@ -13,7 +13,7 @@ RUN dpkg --add-architecture i386 \
         libstdc++6:i386 dpkg-dev:i386 libgtk2.0-0:i386 libncurses5 \
         # Open-source FPGA tools and dependencies for GHDL, Verilator, etc.
         git help2man perl python3 autoconf g++ flex bison ccache \
-        libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlibc \
+        libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlib1g \
         zlib1g zlib1g-dev ghdl gtkwave \
     # Clean up apt cache to reduce image size
     && rm -rf /var/lib/apt/lists/*
