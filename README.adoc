@@ -22,25 +22,31 @@ You can start a VNC session as follows:
 
 === Docker
 
-The underlying Dockerfile for the development container is described in `.devcontainer/Dockerfile` and is build automatically when a Codespace is created. To use it locally, or to debug, you can build it yourself:
+The underlying Dockerfile for the development container is described in `.devcontainer/Dockerfile` and is build automatically when a Codespace is created. You can also retrive it from the GitHub Container Registry, where it is located at:
+
+----
+ghcr.io/kbotteon/fpga-tools:latest
+----
+
+To work locally or debug builds, you can build, run, and attach:
 
 ----
 cd lib/fpga/.devcontainer
 docker build -t fpga_tools:latest .
-----
-
-You can run the image interactively, including forwarding a port for VNC with:
-
-----
 docker run -it --name fpga_tools_1 -p 5901:5901 fpga_tools:latest
 docker exec -it fpga_tools_1 /bin/bash
 ----
 
-To stop the image:
+The port forward is for VNC. It assumes you use display `:1` when launching. To stop the image:
 
 ----
 docker stop fpga_tools_1
 rm fpga_tools_1
 ----
 
-You must remove and recreate the image to change port mappings. Otherwise, skip the remove step and `docker restart fpga_tools_1` to reattach.
+You must remove and recreate the image to change port mappings. Otherwise, skip the remove step and reattach with:
+
+----
+docker restart fpga_tools_1
+docker exec -it fpga_tools_1 /bin/bash
+----
