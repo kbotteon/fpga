@@ -1,0 +1,10 @@
+name: Prebuild
+
+on:
+  push:
+    paths:
+      - '.devcontainer/**'
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
