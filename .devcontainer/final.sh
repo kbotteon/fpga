@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ################################################################################
-# Runs after a build to finalize image
+# \brief Runs after a build to finalize image
 ################################################################################
 
 TOOLS_DIR="/workspaces/tools"
