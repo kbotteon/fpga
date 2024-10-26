@@ -2,6 +2,8 @@
 """
 xsim.py
 
+xsim launcher
+
 Run xsim for a given module, assuming the required configuration files
 are present in its folder tree.
 
@@ -130,7 +132,7 @@ def main(args) -> None:
         shell(xsim_cmd, LOG_PATH, WORK_PATH)
 
     if args.gui:
-        wave_cmd = f"xsim {MODULE_PATH}/{WORK_DIR}/tb_behav.wdb -gui"
+        wave_cmd = f"xsim {MODULE_PATH}/{WORK_DIR}/tb_behav.wdb -gui -tclbatch {MODULE_PATH}/wave.tcl"
         shell(wave_cmd, LOG_PATH, WORK_PATH)
 
 ################################################################################
