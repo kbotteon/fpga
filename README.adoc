@@ -35,3 +35,12 @@ You can run the image interactively, including forwarding a port for VNC with:
 docker run -it --name fpga_tools_1 -p 5901:5901 fpga_tools:latest
 docker exec -it fpga_tools_1 /bin/bash
 ----
+
+To stop the image:
+
+----
+docker stop fpga_tools_1
+rm fpga_tools_1
+----
+
+You must remove and recreate the image to change port mappings. Otherwise, skip the remove step and `docker restart fpga_tools_1` to reattach.
