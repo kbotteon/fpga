@@ -1,7 +1,4 @@
-add_wave tb/i_clk
-add_wave tb/i_rst
-add_wave tb/i_en
-add_wave tb/i_clear
-add_wave tb/o_count
+# This is relative to the ./.xsim working directory created by xsim.py
+source ../wave.tcl
 run all
 exit

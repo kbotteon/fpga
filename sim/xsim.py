@@ -8,7 +8,7 @@ Run xsim for a given module, assuming the required configuration files
 are present in its folder tree.
 
 (C) 2024 Kyle Botteon
-This file is part of HERMIT. Refer to LICENSE in that repository.
+This file is part of HERMIT. Refer to the LICENSE in that repository.
 """
 
 import os
@@ -47,7 +47,7 @@ def shell(command, logpath, cwd) -> None:
                     sys.stdout.write(line)
                     log_obj.write(line)
 
-            # FIXME: Is this necessary if process.poll() is None
+            # FIXME: Is this necessary if process.poll() is None?
             process.wait()
 
         except KeyboardInterrupt:
