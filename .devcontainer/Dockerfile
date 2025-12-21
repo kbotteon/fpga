@@ -17,7 +17,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     libfl2 \
     libgl1-mesa-dev \
     libgl1-mesa-dri \
-    libgl1-mesa-glx \
     libgoogle-perftools-dev \
     libgtk2.0-0:i386 \
     libncurses6 \
