@@ -1,5 +1,6 @@
 # Devtools sets up a pretty well-featured baseline environment
 FROM ghcr.io/kbotteon/devtools/devtools:latest
+USER root
 
 # Set up FPGA tool dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -36,3 +37,5 @@ RUN git clone --recursive -b v5.042 https://github.com/verilator/verilator /usr/
     && ./configure --prefix=/usr/local \
     && make -j$(nproc) \
     && make install
+
+USER developer
