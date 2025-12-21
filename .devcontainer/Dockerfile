@@ -5,6 +5,7 @@ USER root
 # Set up FPGA tool dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     autoconf \
+    bison \
     ccache \
     dbus-x11 \
     default-jre \
