@@ -22,6 +22,7 @@ permissions:
   packages: write
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -61,3 +62,18 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
+
+  cleanup:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Delete old package versions
+        uses: actions/delete-package-versions@v5
+        continue-on-error: true
+        with:
+          package-name: 'fpga/fpga-tools'
+          package-type: 'container'
+          min-versions-to-keep: 1
+          ignore-versions: '^latest$'
