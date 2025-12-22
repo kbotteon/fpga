@@ -38,4 +38,7 @@ RUN git clone --recursive -b v5.042 https://github.com/verilator/verilator /usr/
     && make -j$(nproc) \
     && make install
 
+# on-create.sh is inherited from devtools, which assumes users will make their own post-create.sh
+COPY --chmod=755 post-create.sh /usr/local/bin/
+
 USER developer
